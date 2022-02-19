@@ -12,19 +12,40 @@ export default createStore({
   // las mutaciones sirven para modificar el STATE
       // Las mutaciones se llaman a travez de commit
       // Las mutaciones son Set o establecer para cambiar el STATE
+      // Las mutaciones no retornan un valor, solo modifican el state
   mutations: {
     // Permite leer los datos de los productos con el api.json
     setProducto(state, payload) {
       state.productos = payload
       console.log(state.productos)
     },
+
     // Añade al carrito nuevos objetos o items de la tienda cuando se da click en el botón
     setCarrito(state, payload) {
       state.carrito[payload.id] = payload
       console.log(payload)
     },
+
+    // Vaciar todo el contenido de la lista de compras
     vaciarCarrito(state) {
       state.carrito = {}
+    },
+
+    // Aumentar la cantidad de items con el botón
+      // Payload es donde se pondría el ID del item
+    aumentar(state, payload) {
+      state.carrito[payload].cantidad = state.carrito[payload].cantidad + 1
+    },
+
+    // Disminuir la cantidad de items con el botón
+      // Payload es donde se pondría el ID del item
+    disminuir(state, payload) {
+      //Disminuir 1 a la cantidad del item que está en la lista con el botón "-"
+      state.carrito[payload].cantidad = state.carrito[payload].cantidad - 1
+      // En caso de se use disminuir y la cantidad de items en el espacio sea 0 se va a eliminar el objeto de la lista
+      if(state.carrito[payload].cantidad === 0) {
+        delete state.carrito[payload]
+      }
     }
   },
 
@@ -54,9 +75,11 @@ export default createStore({
 
   // Los getters toman un valor del STATE y lo transforma o hace calculos, como obtener un id o convertir el dato a otro (no modifica nada del STATE)
   getters: {
+    // Retorna la cantidad de todos los items juntos
     totalCantidad(state) {
       return Object.values(state.carrito).reduce((acumulador,{cantidad}) => acumulador + cantidad, 0)
     },
+    // Retorna el total del precio que está en el acumulador de los items
     totalPrecio(state) {
       return Object.values(state.carrito).reduce((acumulador, {cantidad, precio}) => acumulador + cantidad * precio, 0)
     }
