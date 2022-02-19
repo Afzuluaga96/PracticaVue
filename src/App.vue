@@ -9,7 +9,7 @@
       <!-- Repetir las cartas por cada producto y su key que contiene el ID-->
       <Card
         v-for="producto of productos" :key="producto.id"
-        :productos="producto"
+        :producto="producto"
       />
     </div>
 
