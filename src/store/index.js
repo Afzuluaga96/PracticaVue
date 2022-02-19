@@ -22,6 +22,9 @@ export default createStore({
     setCarrito(state, payload) {
       state.carrito[payload.id] = payload
       console.log(payload)
+    },
+    vaciarCarrito(state) {
+      state.carrito = {}
     }
   },
 

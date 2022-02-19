@@ -5,7 +5,7 @@
 
     <!-- botón vaciar todo -->
     <td>
-      <button class="btn btn-danger btn-sm" id="vaciar-carrito">
+      <button class="btn btn-danger btn-sm" id="vaciar-carrito" @click="vaciar">
         Vaciar todo
       </button>
     </td>
@@ -17,7 +17,7 @@
 
 <script>
 import { computed } from 'vue'
-import {useStore} from 'vuex'
+import { useStore } from 'vuex'
 export default {
   setup() {
     const store = useStore()
@@ -25,7 +25,14 @@ export default {
     const totalCantidad = computed(() => store.getters.totalCantidad)
     const totalPrecio = computed(() => store.getters.totalPrecio)
 
-    return {totalCantidad, totalPrecio}
+    // Guardar el setter vaciarCarrito para reiniciar la lista de compras
+    const vaciar = () => {store.commit('vaciarCarrito')}
+
+    return {
+      totalCantidad,
+      totalPrecio,
+      vaciar
+      }
   }
 }
 </script>
