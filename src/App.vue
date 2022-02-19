@@ -1,26 +1,44 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+
+    <h1>Carrito</h1>
+    {{productos}}
+    <hr>
+
+    <div class="row">
+      <!-- Repetir las cartas por cada producto y su key que contiene el ID-->
+      <Card
+        v-for="producto of productos" :key="producto.id"
+        :productos="producto"
+      />
+    </div>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { useStore } from "vuex"
+import { computed, onMounted } from "vue";
+import Card from "./components/Card";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // Componente card que se encuentra en componentes Card.vue
+    Card
+  },
+  // setup en vue3 tiene incorporado el evento create que se inicia antes que el resto de la página
+  setup() {
+    const store = useStore()
+    // Se ejecuta antes que el template
+    onMounted(() => {
+      store.dispatch('fetchData')
+    })
+
+    const productos = computed(() => store.state.productos)
+
+    return {productos}
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
