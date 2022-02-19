@@ -2,7 +2,9 @@
   <div class="container">
 
     <h1>Carrito</h1>
-    {{productos}}
+
+    <pre>{{carrito}}</pre>
+
     <hr>
 
     <div class="row">
@@ -36,8 +38,9 @@ export default {
     })
 
     const productos = computed(() => store.state.productos)
+    const carrito = computed(() => store.state.carrito)
 
-    return {productos}
+    return {productos, carrito}
   }
 }
 </script>

@@ -4,14 +4,14 @@
     <div class="card">
 
       <!-- Imagen del producto -->
-      <img :src="producto.thumbainUrl" :alt="`imagen -${producto.title}`" class="card-img-top" />
+      <img :src="producto.thumbnailUrl" :alt="`imagen -${producto.title}`" class="card-img-top" />
 
       <!-- Botón -->
       <div class="card-body">
         <!-- producto.title viene de la api.json que contiene los productos -->
         <h5 class="card-title">{{producto.title}}</h5>
         <!-- Precio -->
-        <p class="card-text">$ <span>{{producto.Precio}}</span></p>
+        <p class="card-text">$ <span>{{producto.precio}}</span></p>
         <!-- Contenido del botón y color -->
         <button class="btn btn-dark" @click="agregar(producto)">Comprar</button>
       </div>
@@ -26,6 +26,8 @@ export default {
 
   //Exportar los props en un array para que la página pueda interpretarlos
   props: ['producto'],
+
+  // SETUP
   setup() {
     // Llamar a una acción de index.js
     const store = useStore()
